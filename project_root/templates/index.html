@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroAnalyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="header">
+        Agro Analyzer
+    </div>
+    <div class="container">
+        <form method="POST">
+            <label for="rainfall">Rainfall (cm):</label>
+            <input type="number" name="rainfall" step="0.1" value="{{ request.form.rainfall if request.form.rainfall else '' }}" placeholder="Select Rainfall" required>
+
+            <label for="temperature">Temperature (°C):</label>
+            <input type="number" name="temperature" step="0.1" value="{{ request.form.temperature if request.form.temperature else '' }}" placeholder="Select Temperature" required>
+
+            <label for="soil_nutrients">Soil Nutrient Level (1-10):</label>
+            <input type="number" name="soil_nutrients" step="0.1" value="{{ request.form.soil_nutrients if request.form.soil_nutrients else '' }}" placeholder="Select Soil Nutrients" required>
+
+            <label for="market_price">Market Price ($/unit):</label>
+            <input type="number" name="market_price" step="0.1" value="{{ request.form.market_price if request.form.market_price else '' }}" placeholder="Select Market Price" required>
+
+            <button type="submit">Get Recommendation</button>
+        </form>
+
+        {% if prediction %}
+            <div class="result">
+                <h2>Recommended Crop: {{ prediction }}</h2>
+                <ul>
+                    <li>Rainfall: {{ rainfall }} cm affects the water availability for crop growth.</li>
+                    <li>Temperature: {{ temperature }}°C influences the crop's growth cycle and yield.</li>
+                    <li>Soil Nutrient Level: A value of {{ soil_nutrients }} impacts the crop’s nutrition uptake.</li>
+                    <li>Market Price: {{ market_price }} $/unit helps in determining profitability of growing this crop.</li>
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
